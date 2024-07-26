@@ -2,20 +2,31 @@
 # このプログラムは、複数の学生の成績を管理し、合計点と平均点を計算し、
 # 最も成績の良い学生を見つけます。
 def run(students):
-    x = 0
-    y = ""
+    best_score = 0
+    best_student = ""
     for s in students:
-        total = 0
-        count = 0
-        for g in students[s]:
-            total += g
-            count += 1
-        avg = total / count
-        if total > x:
-            x = total
-            y = s
+        avg, total = average(s, students)
+        best_score, best_student = get_better(s, total, best_score, best_student)
         print(f"Student: {s}, Total: {total}, Average: {avg}")
-    return y, x
+    return best_student, best_score
+
+
+def get_better(s, total, best_score, best_student):
+    if total > best_score:
+        best_score = total
+        best_student= s
+    return best_score, best_student
+
+
+def average(s, students):
+    total = 0
+    count = 0
+    for g in students[s]:
+        total += g
+        count += 1
+    avg = total / count
+    return avg, total
+
 
 students = {
     "Alice": [85, 90, 78],
